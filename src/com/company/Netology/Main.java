@@ -4,38 +4,49 @@ import java.util.*;
 
 public class Main {
 
-    private static List<Integer> positiveEvenNumber (List<Integer> list){
-        List<Integer> list2 = new ArrayList<>();
-        for(Integer integer : list){
-            if(integer > 0 && integer % 2 == 0){
-                list2.add(integer);
-                bubbleSort(list2);
+    private static int[] positiveEvenNumber (int[] arr){
+        int countPositiveEven = 0;
+        for(int i = 0; i < arr.length; i++) {
+            if (arr[i] > 0 && arr[i] % 2 == 0) {
+                countPositiveEven++;
             }
         }
-        return list2;
+        int[] arr2 = new int[countPositiveEven];
+        int positiveEvenNum = 0;
+        for(int j = 0; j < arr.length; j++) {
+            if (arr[j] > 0 && arr[j] % 2 == 0) {
+                arr2[positiveEvenNum++] = arr[j];
+            }
+        }
+
+        return arr2;
     }
 
-    private static List<Integer> bubbleSort(List<Integer> list) {
-        int number = 0;
-        boolean sorted = false;
-        while (!sorted) {
-            sorted = true;
-            for (int i = 1; i < list.size(); i++) {
-                if (list.get(i - 1) > list.get(i)) {
-                    number = list.get(i - 1);
-                    list.set(i - 1, list.get(i));
-                    list.set(i, number);
-                    sorted = false;
+    private static int[] bubbleSort(int[] arr) {
+         for(int i = arr.length - 1; i >= 1; i--){
+             for(int j = 0; j < i; j++){
+                 int a = arr[i];
+                 if (a < arr[j]) {
+                    int x = arr[j];
+                    arr[i] = x;
+                    arr[j] = a;
+
                 }
             }
-        }
-        return list;
-    }
+         }
+     return arr;
+       }
 
     public static void main(String[] args) {
         List<Integer> intList = Arrays.asList(1, 2, 5, 16, -1, -2, 0, 32, 3, 5, 8, 23, 4);
-        List<Integer> positiveNumbersList = positiveEvenNumber(intList);
-        System.out.println("Сортировка без Stream API: \n" + bubbleSort(positiveNumbersList));
+        int[] intArr = new int[intList.size()];
+        for(int i = 0; i < intList.size(); i++) {
+            intArr[i] = intList.get(i);
+        }
+
+        int[] positiveEvenArr = positiveEvenNumber(intArr);
+        int[] sortedArr = bubbleSort(positiveEvenArr);
+        System.out.println("Сортировка без Stream API: \n" + Arrays.toString(sortedArr));
 
         System.out.println("------------- \nStream API \n-------------");
         intList.stream()
